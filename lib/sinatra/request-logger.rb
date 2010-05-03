@@ -1,46 +1,57 @@
 module Sinatra
-  class RequestLogger
-    # Common Log Format: http://httpd.apache.org/docs/1.3/logs.html#common
-    # lilith.local - - [07/Aug/2006 23:58:02] "GET / HTTP/1.1" 500 -
-    # %{%s - %s [%s] "%s %s%s %s" %d %s\n} %
-    FORMAT = %{%s - %s [%s] "%s %s%s %s" %d %s %0.4f}
-
-    def initialize(app, logger=nil)
-      @app = app
-      @logger = logger
+  module RequestLogger
+    def self.registered(app)
+      app.use RequestLogger, app.logger
+      app.set :show_exceptions, false
+      app.error do
+        settings.logger.info("#{env['sinatra.error'].class} (#{env['sinatra.error'].message})")
+        settings.logger.info(env['sinatra.error'].backtrace.join("\n"))
+      end
     end
 
-    def call(env)
-      began_at = Time.now
-      status, header, body = @app.call(env)
-      header = Rack::Utils::HeaderHash.new(header)
-      log(env, status, header, began_at)
-      [status, header, body]
-    end
+    class RequestLogger
+      # Common Log Format: http://httpd.apache.org/docs/1.3/logs.html#common
+      # lilith.local - - [07/Aug/2006 23:58:02] "GET / HTTP/1.1" 500 -
+      # %{%s - %s [%s] "%s %s%s %s" %d %s\n} %
+      FORMAT = %{%s - %s [%s] "%s %s%s %s" %d %s %0.4f}
 
-    private
+      def initialize(app, logger=nil)
+        @app = app
+        @logger = logger
+      end
 
-    def log(env, status, header, began_at)
-      now = Time.now
-      length = extract_content_length(header)
+      def call(env)
+        began_at = Time.now
+        status, header, body = @app.call(env)
+        header = Rack::Utils::HeaderHash.new(header)
+        log(env, status, header, began_at)
+        [status, header, body]
+      end
 
-      logger = @logger || env['rack.errors']
-      logger.info FORMAT % [
-        env['HTTP_X_FORWARDED_FOR'] || env["REMOTE_ADDR"] || "-",
-        env["REMOTE_USER"] || "-",
-        now.strftime("%d/%b/%Y %H:%M:%S"),
-        env["REQUEST_METHOD"],
-        env["PATH_INFO"],
-        env["QUERY_STRING"].empty? ? "" : "?"+env["QUERY_STRING"],
-        env["HTTP_VERSION"],
-        status.to_s[0..3],
-        length,
-        now - began_at ]
-    end
+      private
 
-    def extract_content_length(headers)
-      value = headers['Content-Length'] or return '-'
-      value.to_s == '0' ? '-' : value
+      def log(env, status, header, began_at)
+        now = Time.now
+        length = extract_content_length(header)
+
+        logger = @logger || env['rack.errors']
+        logger.info FORMAT % [
+          env['HTTP_X_FORWARDED_FOR'] || env["REMOTE_ADDR"] || "-",
+          env["REMOTE_USER"] || "-",
+          now.strftime("%d/%b/%Y %H:%M:%S"),
+          env["REQUEST_METHOD"],
+          env["PATH_INFO"],
+          env["QUERY_STRING"].empty? ? "" : "?"+env["QUERY_STRING"],
+          env["HTTP_VERSION"],
+          status.to_s[0..3],
+          length,
+          now - began_at ]
+      end
+
+      def extract_content_length(headers)
+        value = headers['Content-Length'] or return '-'
+        value.to_s == '0' ? '-' : value
+      end
     end
   end
 end

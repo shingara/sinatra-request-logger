@@ -4,11 +4,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "sinatra-logger"
+    gem.name = "sinatra-request-logger"
     gem.summary = %Q{Log all request and error on Logger}
     gem.description = %Q{Log request and error on Logger send it by settings}
     gem.email = "cyril@yeastymobs.com"
-    gem.homepage = "http://github.com/shingara/sinatra-logger"
+    gem.homepage = "http://github.com/shingara/sinatra-request-logger"
     gem.authors = ["Cyril Mougel"]
     gem.add_dependency "sinatra", ">=1.0.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
@@ -47,7 +47,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "sinatra-logger #{version}"
+  rdoc.title = "sinatra-request-logger #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

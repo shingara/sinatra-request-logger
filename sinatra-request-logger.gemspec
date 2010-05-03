@@ -4,7 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{sinatra-logger}
+  s.name = %q{sinatra-request-logger}
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -22,12 +22,12 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.rdoc",
      "Rakefile",
+     "VERSION.yml",
      "lib/sinatra/request-logger.rb",
-     "lib/sinatra/sinatra-logger.rb",
      "test/helper.rb",
      "test/test_sinatra-logger.rb"
   ]
-  s.homepage = %q{http://github.com/shingara/sinatra-logger}
+  s.homepage = %q{http://github.com/shingara/sinatra-request-logger}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
