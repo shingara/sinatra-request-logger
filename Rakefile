@@ -5,12 +5,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "sinatra-logger"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Log all request and error on Logger}
+    gem.description = %Q{Log request and error on Logger send it by settings}
     gem.email = "cyril@yeastymobs.com"
     gem.homepage = "http://github.com/shingara/sinatra-logger"
     gem.authors = ["Cyril Mougel"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.add_dependency "sinatra", ">=1.0.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
