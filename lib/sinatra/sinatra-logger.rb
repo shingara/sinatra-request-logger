@@ -2,9 +2,9 @@ require 'sinatra/base'
 require 'sinatra/request-logger'
 
 module Sinatra
-  class SinatraLogger
+  module SinatraLogger
     def self.registered(app)
-      app.use SyslogLogger, Proc.new{ |x| x.settings.logger}
+      app.use RequestLogger, app.logger
       app.set :show_exceptions, false
       app.error do
         settings.logger.info("#{env['sinatra.error'].class} (#{env['sinatra.error'].message})")

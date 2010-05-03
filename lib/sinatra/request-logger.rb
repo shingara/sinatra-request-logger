@@ -1,4 +1,4 @@
-module SinatraLogger
+module Sinatra
   class RequestLogger
     # Common Log Format: http://httpd.apache.org/docs/1.3/logs.html#common
     # lilith.local - - [07/Aug/2006 23:58:02] "GET / HTTP/1.1" 500 -
