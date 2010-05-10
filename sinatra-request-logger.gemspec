@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sinatra-request-logger}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cyril Mougel"]
-  s.date = %q{2010-05-03}
+  s.date = %q{2010-05-10}
   s.description = %q{Log request and error on Logger send it by settings}
   s.email = %q{cyril@yeastymobs.com}
   s.extra_rdoc_files = [
