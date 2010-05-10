@@ -8,18 +8,21 @@ module Sinatra
 
     class ProxyLogger
       def initialize(logger)
+        @buffer = StringIO.new("")
         @logger = logger
       end
 
       def write(msg)
+        @buffer.write(msg)
         @logger.info(msg)
       end
 
       def flush
-        #nothing
+        @buffer.flush
       end
 
       def puts(msg)
+        @buffer.puts(msg)
         if msg.is_a?(Array)
           @logger.info(msg.map(&:chomp).join("\n"))
         elsif msg.is_a?(String)
